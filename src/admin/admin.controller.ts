@@ -1,21 +1,10 @@
-import { Controller, Get, Inject } from "@nestjs/common";
-import { AdminService } from "./admin.service";
-import { JwtService } from "@nestjs/jwt";
+import { Controller, Get } from "@nestjs/common";
+import AbstractController from "../abstract.controller";
 
 @Controller("admin")
-export class AdminController {
-  @Inject()
-  private readonly service: AdminService;
-
-  @Inject()
-  private readonly jwt: JwtService;
-
+export class AdminController extends AbstractController {
   @Get()
   async login() {
-    const user = await this.service.findOne(1);
-    return {
-      user: user,
-      token: await this.jwt.signAsync({ id: user.id, username: user.nickname })
-    };
+    return this.success({})
   }
 }
