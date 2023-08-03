@@ -6,24 +6,20 @@ import { JwtModule } from "@nestjs/jwt";
 import { JwtMiddleware } from "./middlewares/jwt.middleware";
 import { AdminController } from "./admin/admin.controller";
 import jwtConfig from "./config/jwt.config";
-import {env} from "process";
+import databaseConfig from "./config/database.config";
 
 @Module({
   imports: [
     AdminModule,
+
+    // 配置模块
     ConfigModule.forRoot({ isGlobal: true }),
+
+    // Jwt模块
     JwtModule.register(jwtConfig),
 
     // 注册TypeOrm模块
-    TypeOrmModule.forRoot({
-      type: "mysql",
-      host: env.DB_HOST,
-      port: parseInt(env.DB_PORT),
-      username: env.DB_USERNAME,
-      password: env.DB_PASSWORD,
-      database: env.DB_DATABASE,
-      autoLoadEntities: true
-    })
+    TypeOrmModule.forRoot(databaseConfig)
   ]
 })
 export class AppModule {

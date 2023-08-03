@@ -5,6 +5,6 @@ import AbstractController from "../abstract.controller";
 export class AdminController extends AbstractController {
   @Get()
   async login() {
-    return this.success({})
+    return this.success()
   }
 }
