@@ -4,7 +4,6 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { JwtModule } from "@nestjs/jwt";
 import { JwtMiddleware } from "./middlewares/jwt.middleware";
-import { AdminController } from "./admin/admin.controller";
 import jwtConfig from "./config/jwt.config";
 import databaseConfig from "./config/database.config";
 
@@ -24,6 +23,6 @@ import databaseConfig from "./config/database.config";
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes(AdminController);
+    consumer.apply(JwtMiddleware).forRoutes('*');
   }
 }

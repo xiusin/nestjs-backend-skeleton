@@ -1,7 +1,18 @@
+/**
+ * 响应结构体
+ */
 export interface Response {
-  code: number;
-  message: string | Error;
+  code: StatusCode;
+  message: string | Error | object;
   data: object;
+}
+
+/**
+ * 响应状态码
+ */
+enum StatusCode {
+  OK = 200,
+  ERR = 500
 }
 
 export default abstract class AbstractController {
@@ -16,7 +27,7 @@ export default abstract class AbstractController {
       data = message as object;
       message = "success";
     }
-    return <Response>{ "code": 200, "message": message, "data": data };
+    return <Response>{ "code": StatusCode.OK, "message": message, "data": data };
   }
 
   /**
@@ -26,7 +37,7 @@ export default abstract class AbstractController {
    * @return Response
    */
   error(message: string | Error = "failed", data: object = null) {
-    return <Response>{ "code": 500, "message": message, "data": data };
+    return <Response>{ "code": StatusCode.ERR, "message": message, "data": data };
   }
 
 }
