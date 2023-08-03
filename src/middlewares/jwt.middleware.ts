@@ -1,6 +1,5 @@
 import { Inject, Injectable, NestMiddleware } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import * as console from "console";
 
 @Injectable()
 export class JwtMiddleware implements NestMiddleware {

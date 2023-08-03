@@ -1,3 +1,5 @@
+import { Logger } from "@nestjs/common";
+
 /**
  * 响应结构体
  */
@@ -16,6 +18,19 @@ enum StatusCode {
 }
 
 export default abstract class AbstractController {
+
+  /**
+   * 控制器实体
+   */
+  public readonly logger: Logger;
+
+  /**
+   * 构造控制器专属服务
+   */
+  constructor() {
+    this.logger = new Logger(this.constructor.name);
+  }
+
   /**
    * 响应成功数据
    * @param message
@@ -37,7 +52,12 @@ export default abstract class AbstractController {
    * @return Response
    */
   error(message: string | Error = "failed", data: object = null) {
+    if (message instanceof Error) {
+      const err = message.stack.split("\n").filter((it: string) => !it.includes("node_modules")).join("\n")
+      this.logger.error(err);
+      message = message.message;
+    }
+
     return <Response>{ "code": StatusCode.ERR, "message": message, "data": data };
   }
-
 }
