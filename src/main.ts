@@ -12,22 +12,15 @@ import {
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
-
-  const options = new DocumentBuilder()
-    .setTitle("admin api")
-    .setDescription("The admin API description")
-    .setVersion("1.0")
-    .addTag("admin")
-    // .addBearerAuth()
-    .build();
+  const options = new DocumentBuilder().setTitle("admin api").build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("doc", app, document);
 
-  app.setGlobalPrefix("/v1/api");
+  // app.setGlobalPrefix("/v1/api");
   app.enableCors();
   await app.register(helmet);
   await app.register(compression);
-  await app.register(fastifyCsrf, { cookieOpts: { signed: true } });
+  await app.register(fastifyCsrf);
   await app.listen(3000, "0.0.0.0");
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
