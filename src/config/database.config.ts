@@ -1,12 +1,11 @@
-import { env } from "process";
-import { TypeOrmModuleOptions } from "@nestjs/typeorm/dist/interfaces/typeorm-options.interface";
+import env from "../common/env.ts";
 
-export default <TypeOrmModuleOptions>{
-  type: "mysql",
-  host: env.DB_HOST || 'localhost',
-  port: parseInt(env.DB_PORT) || 3306,
-  username: env.DB_USERNAME || 'root',
-  password: env.DB_PASSWORD || 'root',
-  database: env.DB_DATABASE || 'test',
-  autoLoadEntities: true
+export default {
+    type: env.get('DB_DRIVER') || 'mysql',
+    host: env.get('DB_HOST') || 'localhost',
+    port: parseInt(env.get('DB_PORT', '3306') as string),
+    username: env.get('DB_USERNAME') || 'root',
+    password: env.get('DB_PASSWORD') || 'root',
+    database: env.get('DB_DATABASE') || 'test',
+    autoLoadEntities: true
 }

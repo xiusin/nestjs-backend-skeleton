@@ -1,5 +1,7 @@
+import env from "../common/env.ts";
+
 export default {
-  global: true,
-  secret: "db2e57200cda4043e4bd848d434f590854MCB",
-  signOptions: { expiresIn: "3600s" }
+    global: true,
+    secret: env.get('JWT_SECRET', 'secret') as string,
+    signOptions: { expiresIn: env.get('JWT_TTL', '3600s') as string }
 }

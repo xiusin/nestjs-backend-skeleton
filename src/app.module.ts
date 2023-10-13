@@ -1,28 +1,37 @@
+import { SequelizeModule } from '@nestjs/sequelize';
+
 import { MiddlewareConsumer, Module } from "@nestjs/common";
-import { AdminModule } from "./admin/admin.module";
+import { AdminModule } from "./admin/admin.module.ts";
 import { ConfigModule } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
 import { JwtModule } from "@nestjs/jwt";
-import { JwtMiddleware } from "./middlewares/jwt.middleware";
-import jwtConfig from "./config/jwt.config";
-import databaseConfig from "./config/database.config";
+import { JwtMiddleware } from "./middlewares/jwt.middleware.ts";
+import jwtConfig from "./config/jwt.config.ts";
+import databaseConfig from "./config/database.config.ts";
 
 @Module({
-  imports: [
-    AdminModule,
+    imports: [
+        // MikroOrmModule.forRoot(databaseConfig),
+        // SequelizeModule.forRoot({
+        //     dialect: 'mysql',
+        //     host: 'localhost',
+        //     port: 3306,
+        //     username: 'root',
+        //     password: 'root',
+        //     database: 'test',
+        //     models: [],
+        // }),
 
-    // 配置模块
-    ConfigModule.forRoot({ isGlobal: true }),
+        AdminModule,
 
-    // Jwt模块
-    JwtModule.register(jwtConfig),
+        // 配置模块
+        ConfigModule.forRoot({ isGlobal: true }),
 
-    // 注册TypeOrm模块
-    TypeOrmModule.forRoot(databaseConfig)
-  ]
+        // Jwt模块
+        JwtModule.register(jwtConfig),
+    ]
 })
 export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes('*');
-  }
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(JwtMiddleware).forRoutes('*');
+    }
 }
