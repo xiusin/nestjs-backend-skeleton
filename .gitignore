@@ -38,3 +38,6 @@ lerna-debug.log*
 /package-lock.json
 /deno.lock
 .env
+*.db
+/yarn.lock
+/yarn-error.log

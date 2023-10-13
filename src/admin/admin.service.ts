@@ -1,16 +1,15 @@
-import { Injectable } from "@nestjs/common";
-// import { InjectRepository } from "@nestjs/typeorm";
-// import { Repository } from "typeorm";
+import { Inject, Injectable } from "@nestjs/common";
+import { PrismaService } from "../common/prisma.service.ts";
 
 @Injectable()
 export class AdminService {
     constructor(
-        // @InjectRepository(ShopUser) private usersRepository: Repository<ShopUser>
-    ) {
-    }
+        @Inject(PrismaService) private prisma: PrismaService
+    ) { }
 
     async findOne(id: number) {
-        console.log(`find one ${id}`);
-        // return await this.usersRepository.findOneBy({ id });
+        const ret = await this.prisma.user.findFirst({ where: { id } })
+        console.log(`find one ${id} -> ${ret}`);
+        return ret;
     }
 }

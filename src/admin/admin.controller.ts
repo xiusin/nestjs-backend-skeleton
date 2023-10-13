@@ -1,12 +1,11 @@
-import { Controller, Get, Inject } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 import AbstractController from "../abstract.controller.ts";
 
 @Controller("admin")
 export class AdminController extends AbstractController {
     @Get('/login')
     async login() {
-        // await this.getService();
-        return this.success(this.service.findOne(1));
+        return this.success(await this.service.findOne(1));
     }
 
     /**
