@@ -1,5 +1,5 @@
 import { Inject, Logger } from "@nestjs/common";
-import { AdminService } from "./admin/admin.service";
+import { AdminService } from "./admin/admin.service.ts";
 
 /**
  * 响应结构体
