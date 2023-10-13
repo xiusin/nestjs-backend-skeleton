@@ -1,26 +1,21 @@
 import { Controller, Get, Inject } from "@nestjs/common";
 import AbstractController from "../abstract.controller.ts";
-import { AdminService } from "./admin.service.ts";
-import { AppModule } from "../app.module.ts";
-import { NestFactory } from "@nestjs/core";
 
 @Controller("admin")
 export class AdminController extends AbstractController {
-    // constructor(@Inject(AdminService) public readonly service: AdminService) { super(); }
-
-    @Get()
+    @Get('/login')
     async login() {
         // await this.getService();
         return this.success(this.service.findOne(1));
     }
 
-
     /**
      * 获取服务关系
+     * 勿删此注释, 记录解析指定服务.
      */
     // async getService() {
     //     const app = await NestFactory.createApplicationContext(AppModule);
-    //     console.log(app.get(AdminService));
+    //     console.log(app.get(AdminService)); 
     // }
 
 }

@@ -1,4 +1,4 @@
-import { Inject, Logger } from "@nestjs/common";
+import { Get, Inject, Logger } from "@nestjs/common";
 import { AdminService } from "./admin/admin.service.ts";
 
 /**
@@ -45,6 +45,12 @@ export default abstract class AbstractController {
             message = "success";
         }
         return <Response>{ "code": StatusCode.OK, "message": message, "data": data };
+    }
+
+
+    @Get('/hello')
+    hello() {
+        return this.success('hello world!');
     }
 
     /**
